@@ -1,0 +1,19 @@
+class Login extends Component {
+  handleClick = () => {
+
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/users?publicAddress=${publicAddress}`)
+      .then(response => response.json())
+      .then(
+        users => (users.length ? users[0] : this.handleSignup(publicAddress))
+      )
+  };
+
+  handleSignup = publicAddress =>
+    fetch(`${process.env.REACT_APP_BACKEND_URL}/users`, {
+      body: JSON.stringify({ publicAddress }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    }).then(response => response.json());
+}
